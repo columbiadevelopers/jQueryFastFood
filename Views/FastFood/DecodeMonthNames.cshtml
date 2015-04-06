@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Decode Month Names";
+}
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+@{ Html.RenderPartial("commandButtons"); }
+<table id = "pipelineData" ></table>
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '@Url.Action("GetPipelineData")',
+                dataType: "json",
+                type: "POST",
+                success: function(result) {
+                    bindDataToTable(result, $("#pipelineData"));
+                    var index;
+                    var referenceDate = new Date().getMonth();
+                    for (index = 1; index <= 12; index++) {
+                        var unitColumn = (index * 2) + 1;
+                        var volumnColumn = (index * 2) + 2;
+                        $("#pipelineData th:nth-child(" + unitColumn + ")").html(months[getMonthIndex(referenceDate - index)] );
+                        $("#pipelineData th:nth-child(" + volumnColumn + ")").html(months[getMonthIndex(referenceDate - index)] );
+                    }
+                    showVolume();
+                }
+            });
+        });
+    </script>
+}

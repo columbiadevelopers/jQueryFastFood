@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Control Break";
+}
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+    @{ Html.RenderPartial("commandButtons"); }
+    <table id="pipelineData"></table>
+    @section scripts{
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: '@Url.Action("GetExtendedData")',
+                    dataType: "json",
+                    type: "POST",
+                    success: function (result) {
+                        bindDataToTable(result.data, $("#pipelineData"));
+                        var index;
+                        var referenceDate = new Date().getMonth();
+                        for (index = 1; index <= 12; index++) {
+                            var unitColumn = (index * 2) + 1;
+                            var volumnColumn = (index * 2) + 2;
+                            $("#pipelineData th:nth-child(" + unitColumn + ")").html(months[getMonthIndex(referenceDate - index)]);
+                            $("#pipelineData th:nth-child(" + volumnColumn + ")").html(months[getMonthIndex(referenceDate - index)]);
+                        }
+                        var previousValue = 0;
+                        var currentValue = 0;
+                        if (result.hasOwnProperty("regions")) {
+                            for (index = 0; index < result.regions.length; index++) {
+                                if (index > 0) {
+                                    previousValue = result.regions[index - 1].Count;
+                                }
+                                currentValue = previousValue + currentValue + 1;
+                                $("#pipelineData tr:nth-child(" + currentValue + ")")
+                                    .after("<tr><td></td><td colspan='15' class = 'sectionHeader'>"
+                                    + result.regions[index].Region + "</td></tr>");
+                            }
+                            hideColumn("#pipelineData", 1);
+                            showVolume();
+                        }
+                    }
+                });
+            });
+        </script>
+    }

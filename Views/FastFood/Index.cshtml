@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "jQuery Fast Food";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+    <table id="pipelineData"></table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("GetPipelineData")',
+                dataType: "json",
+                type: "POST",
+
+                success: function (result) {
+                    bindDataToTable(result, $("#pipelineData"));
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,67 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+</head>
+
+<body data-spy="scroll" data-offset="0" >
+    <div id="wrapper">
+        <!-- Fixed navbar -->
+        <div id="navigation" class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><b>Columbia Developers Guild</b></a>
+                </div>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Fast Food", "Index", "FastFood")</li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav" id ="sideBarList">
+                @RenderSection("sideBar", false)
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    @RenderSection("scripts", false)
+    <script src="~/Scripts/siteLayout.js"></script>
+</body>
+</html>
